@@ -1,0 +1,119 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+#screen {
+    height: 100%;
+    width: 100%;
+}
+
+#topbar {
+    display: flex;
+    flex-direction: row;
+    height: 8%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    height: 92%;
+    width: 100%;
+    background-color: red
+}
+
+#sidebar {
+    height: 100%;
+    width: 10%;
+    background-color: green;
+}
+
+#content {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 90%;
+    background-color: yellow;
+}
+
+#twitch {
+    height: 100%;
+    width: 50%;
+    background-color: blue;
+}
+
+#code {
+    height: 100%;
+    width: 50%;
+    background-color: purple;
+}
+
+#stream {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+}
+
+#chat {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: pink;
+}
+
+#chat iframe {
+    height: 80%;
+    width: 80%;
+}
+
+#options {
+    height: 10%;
+    width: 100%;
+    background-color: red;
+}
+
+#editor {
+    height: 75%;
+    width: 100%;
+    background-color: yellow;
+}
+
+#upload-submit {
+    height: 15%;
+    width: 100%;
+    background-color: green;
+}
+
+#player {
+    width: 80%;
+    height:80%;
+}
+
+#player iframe {
+    width: 100%;
+    height: 100%;
+}
+
+#logo {
+    color: rgb(53, 52, 133);
+    text-decoration: none;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    border-radius: 0;
+    padding:0%;
+}
