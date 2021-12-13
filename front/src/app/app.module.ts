@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -14,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    MonacoEditorModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
