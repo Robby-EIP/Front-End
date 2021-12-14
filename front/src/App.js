@@ -1,12 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
 import RobotPageContainer from './components/robotsUsageContainer/robotscontainer';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <RobotPageContainer/>
-    </div>
+    <Routes>
+      <Route exact path='/' element={<RobotPageContainer/>}></Route>
+    </Routes>
   );
 }
 

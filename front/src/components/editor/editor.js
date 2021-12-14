@@ -2,10 +2,6 @@ import Editor from "@monaco-editor/react";
 
 function MyEditor() {
 
-    const printNimp = () => {
-        console.log("Hello World");
-    };
-
     function handleEditorChange(value, event) {
         // here is the current value
     }
@@ -27,10 +23,11 @@ function MyEditor() {
     return (
         <>
             <Editor
-                height="50vh"
-                width="50vw"
+                height="100%"
+                width="100%"
+                theme="vs-dark"
                 defaultLanguage="javascript"
-                defaultValue="// some comment"
+                defaultValue="//Start your code here to move the robot around !!!"
                 onChange={handleEditorChange}
                 onMount={handleEditorDidMount}
                 beforeMount={handleEditorWillMount}
