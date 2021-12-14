@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 #screen {
@@ -294,4 +295,12 @@ a {
     .body-pd {
         padding-left: calc(var(--nav-width) + 188px)
     }
+}
+
+html, body, #container2 {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 }

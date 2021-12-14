@@ -24,6 +24,7 @@
     "bootstrap": "^3.4.1",
     "jquery": "^3.6.0",
     "monaco-editor": "^0.31.0",
+    "monaco-editor-webpack-plugin": "^7.0.0",
     "ngx-monaco-editor": "^6.0.0",
     "popper.js": "^1.16.1",
     "rxjs": "~7.4.0",
