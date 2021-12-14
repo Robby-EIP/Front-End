@@ -1,16 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-
-import Editor from "@monaco-editor/react";
+import RobotPageContainer from './components/robotsUsageContainer/robotscontainer';
 
 function App() {
   return (
-    <Editor
-     height="90vh"
-     defaultLanguage="javascript"
-     defaultValue="// some comment"
-   />
-
+    <div className="App">
+      <RobotPageContainer/>
+    </div>
   );
 }
 
