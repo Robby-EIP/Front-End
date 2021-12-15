@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import MyEditor from '../editor/editor';
 import script from 'react';
 import Navbar from '../navbar/navbar';
@@ -15,6 +15,7 @@ function RobotPageContainer() {
 	const [theme, setTheme] = useState('vs-dark');
 	const [lang, setLang] = useState('javascript');
 	const [switchText, setSwitchText] = useState('Switch to Light Mode');
+    const [editorValue, setEditorValue] = useState('');
 
 	function changeLang(lang) {
 		setLang(lang);
@@ -30,7 +31,8 @@ function RobotPageContainer() {
 	}
 
 	function printValue() {
-		console.log(document.getElementById('editor').firstElementChild.innerHTML );
+		// console.log(document.getElementById('editor').firstElementChild.innerHTML );
+        console.log("editorValue" , editorValue);
 	}
 
     return (
@@ -81,7 +83,9 @@ function RobotPageContainer() {
 						</Form>
 					</div>
 					<div id="editor">
-						<Editor id="editorPrompt" theme={theme} language={lang}/>
+						<Editor id="editorPrompt" theme={theme} language={lang} value={editorValue} onChange={(value) => {
+                            setEditorValue(value);
+                        }} />
 					</div>
 					<div id="upload-submit">
 						<div id="file-upload">
