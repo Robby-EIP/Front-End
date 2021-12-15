@@ -125,9 +125,47 @@ html, body, #root{
 }
 
 #upload-submit {
+  display: flex;
+  flex-direction: row;
   height: 15%;
   width: 100%;
   background-color: green;
+}
+
+#submit-button {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 50%;
+  background-color: red;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#formFile {
+  height: 100%;
+  width: 100%;
+  background-color: blue;
+}
+
+#upload-text {
+  height: 25%;
+  width: 100%;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#file-upload {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+  background-color: blue;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 #player {

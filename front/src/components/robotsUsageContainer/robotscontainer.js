@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import MyEditor from '../editor/editor';
 import script from 'react';
 import Navbar from '../navbar/navbar';
-import Form from 'react-bootstrap/Form';
+import {Form, Button, Label} from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
@@ -57,11 +57,14 @@ function RobotPageContainer() {
 					</div>
 					<div id="upload-submit">
 						<div id="file-upload">
+							<span id="upload-text">Upload your code here !</span>
 							<Form.Group controlId="formFile">
-  							  <Form.Control type="file" />
+  							  	<Form.Control type="file"/>
   							</Form.Group>
 						</div>
 						<div id="submit-button">
+							<Button size="lg" variant="outline-success">Simulate</Button>
+							<Button size="lg" variant="success">Upload</Button>
 						</div>
 					</div>
 				</div>
