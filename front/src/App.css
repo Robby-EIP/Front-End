@@ -64,16 +64,11 @@ html, body, #root{
   background-color: red
 }
 
-#sidebar {
-  height: 100%;
-  width: 10%;
-  background-color: green;
-}
-
 #content {
   display: flex;
   flex-direction: row;
   width: 90%;
+  flex: 1;
   background-color: yellow;
 }
 
@@ -113,9 +108,14 @@ html, body, #root{
 }
 
 #options {
+  display: flex;
+  flex-direction: row;
   height: 10%;
   width: 100%;
   background-color: red;
+  align-items: center;
+  justify-content: space-evenly;
+
 }
 
 #editor {

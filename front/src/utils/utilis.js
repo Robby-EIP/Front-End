@@ -1,4 +1,3 @@
-
 export const getAPI = async (url) => {
   try {
     const response = await fetch(url, {
