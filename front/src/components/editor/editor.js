@@ -8,7 +8,7 @@ function MyEditor() {
 
     function handleEditorDidMount(editor, monaco) {
         console.log("onMount: the editor instance:", editor);
-        console.log("onMount: the monaco instance:", monaco)
+        console.log("onMount: the monaco instance:", monaco);
     }
 
     function handleEditorWillMount(monaco) {
