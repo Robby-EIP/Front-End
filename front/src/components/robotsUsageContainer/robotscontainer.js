@@ -24,8 +24,9 @@ function RobotPageContainer() {
   const [errorMessage, setErrorMessage] = useState('');
   const [variant, setVariant] = useState('danger');
   const [isBlockLoop, setIsBlockLoop] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState(undefined);
   const willMount = useRef(true);
-  const fileInput = useRef(null);
+  const [fileInput, setFileInput] = useState(false);
 
   function changeLang(lang) {
     setLang(lang);
@@ -43,13 +44,15 @@ function RobotPageContainer() {
   async function uploadFile(e) {
     e.preventDefault();
     if (e.target.files) {
+      setSelectedFiles(e.target.files);
+      setFileInput(true);
       // console.log(e.target.files);
       // let file = e.target.files[0];
-      let form = new FormData();
-      form.append('file', e.target.files[0]);
-      if (e.target.files[0]) {
-        sendRobotFileCode(robot, form);
-      }
+      // let form = new FormData();
+      // form.append('file', e.target.files[0]);
+      // if (e.target.files[0]) {
+      //   sendRobotFileCode(robot, form);
+      // }
     } else {
       console.log("Nope");
     }
@@ -67,13 +70,16 @@ function RobotPageContainer() {
     }
 
     if (fileInput) {
-      let res = await sendRobotFileCode(robot, editorValue);
+      let formData = new FormData();
+      formData.append('file', selectedFiles[0]);
+      let res = await sendRobotFileCode(robot, formData);
       if (res) {
         setShowError(true);
         setErrorMessage('Uploaded Successfully');
         setTimeout(() => {
           setShowError(false);
         }, 3000);
+        setFileInput(false);
       } else {
         console.log(res);
         setShowError(true);
@@ -81,7 +87,9 @@ function RobotPageContainer() {
         setTimeout(() => {
           setShowError(false);
         }, 3000);
+        setFileInput(false);
       }
+      document.getElementById('upload').value = "";
     }
 
     if (editorValue.length === 0) {
@@ -240,7 +248,7 @@ function RobotPageContainer() {
                 <div id="file-upload">
                   <span id="upload-text">Upload your code here !</span>
                   <Form.Group controlId="formFile">
-                    <Form.Control type="file" onChange={(e) => uploadFile(e)} />
+                    <Form.Control id="upload" type="file" onChange={(e) => uploadFile(e)} />
                   </Form.Group>
                 </div>
                 <div id="submit-button">
