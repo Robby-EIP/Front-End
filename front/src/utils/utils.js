@@ -115,7 +115,7 @@ export const sendRobotFileCode = async (robotName, file) => {
       file,
       {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*'
         }

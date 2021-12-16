@@ -8,7 +8,7 @@ import Editor from "@monaco-editor/react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
-import { getRobots, sendRobotBlockCode, sendRobotRawCode } from '../../utils/utils';
+import { getRobots, sendRobotBlockCode, sendRobotRawCode, sendRobotFileCode } from '../../utils/utils';
 
 function RobotPageContainer() {
 
@@ -25,6 +25,7 @@ function RobotPageContainer() {
   const [variant, setVariant] = useState('danger');
   const [isBlockLoop, setIsBlockLoop] = useState(false);
   const willMount = useRef(true);
+  const fileInput = useRef(null);
 
   function changeLang(lang) {
     setLang(lang);
@@ -39,6 +40,21 @@ function RobotPageContainer() {
     setTheme(theme === 'vs-dark' ? 'vs-light' : 'vs-dark');
   }
 
+  async function uploadFile(e) {
+    e.preventDefault();
+    if (e.target.files) {
+      // console.log(e.target.files);
+      // let file = e.target.files[0];
+      let form = new FormData();
+      form.append('file', e.target.files[0]);
+      if (e.target.files[0]) {
+        sendRobotFileCode(robot, form);
+      }
+    } else {
+      console.log("Nope");
+    }
+  }
+
   async function uploadCode() {
     // console.log(document.getElementById('editor').firstElementChild.innerHTML );
     if (robot === '') {
@@ -49,6 +65,25 @@ function RobotPageContainer() {
       }, 3000);
       return;
     }
+
+    if (fileInput) {
+      let res = await sendRobotFileCode(robot, editorValue);
+      if (res) {
+        setShowError(true);
+        setErrorMessage('Uploaded Successfully');
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000);
+      } else {
+        console.log(res);
+        setShowError(true);
+        setErrorMessage('Error while uploading');
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000);
+      }
+    }
+
     if (editorValue.length === 0) {
       setShowError(true);
       setErrorMessage('Please enter some code / bloks before uploading');
@@ -57,6 +92,7 @@ function RobotPageContainer() {
       }, 3000);
       return;
     }
+
     if (isBlock == true) {
       let res = await sendRobotBlockCode(robot, editorValue, isBlockLoop);
       if (res === true) {
@@ -204,7 +240,7 @@ function RobotPageContainer() {
                 <div id="file-upload">
                   <span id="upload-text">Upload your code here !</span>
                   <Form.Group controlId="formFile">
-                    <Form.Control type="file" />
+                    <Form.Control type="file" onChange={(e) => uploadFile(e)} />
                   </Form.Group>
                 </div>
                 <div id="submit-button">
