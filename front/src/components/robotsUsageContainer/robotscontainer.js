@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import MyEditor from '../editor/editor';
 import script from 'react';
 import Navbar from '../navbar/navbar';
-import { Form, Button, Label, Dropdown, DropdownButton, Alert, Spinner } from 'react-bootstrap';
+import { Form, Button, Card, Label, Dropdown, DropdownButton, Alert, Spinner } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,6 +28,7 @@ function RobotPageContainer() {
   const willMount = useRef(true);
   const [fileInput, setFileInput] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [blocList, setBlocList] = useState([]);
 
   function changeLang(lang) {
     setLang(lang);
@@ -49,6 +50,18 @@ function RobotPageContainer() {
       setFileInput(true);
     } else {
       console.log("Nope");
+    }
+  }
+
+  async function seeRobotsBlocks() {
+    let res = await getAvailableRobotBlocks(robot);
+    let list = [];
+    if (res) {
+      list = res.split(',');
+      setNbrBlocs(list);
+      console.log(list);
+    } else {
+      console.log("zeubi");
     }
   }
 
@@ -242,6 +255,11 @@ function RobotPageContainer() {
                 </Form>
               </div>
               <div id="editor">
+                {nbrBlocs.map((a, i) => (
+                  <Card id={i} style={{height: "150px", width: "50px"}}>
+                    <Card.Title>{a}</Card.Title>
+                  </Card>
+                ))}
                 <Editor id="editorPrompt" theme={theme} language={lang} value={editorValue} onChange={(value) => {
                   setEditorValue(value);
                 }} />

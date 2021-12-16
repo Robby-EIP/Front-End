@@ -61,8 +61,8 @@ export const getAvailableRobotBlocks = async (robotName) => {
     const url = `${process.env.REACT_APP_API_URL}/blocs?robot=${robotName}`;
     let response = await getAPI(url);
   
-    if (response['data']['success'] == "true") {
-      return response['data']['blocks'];
+    if (response.data.success === "true") {
+      return response['data']['blocs'];
     }
     return [];
   } catch (error) {
@@ -121,7 +121,6 @@ export const sendRobotFileCode = async (robotName, file) => {
         }
       }
     );
-  
     if (response['status'] == '200') {
       return true;
     }
