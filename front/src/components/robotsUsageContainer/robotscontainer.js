@@ -22,6 +22,8 @@ function RobotPageContainer() {
   const [isBlock, setIsBlock] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [variant, setVariant] = useState('danger');
+  const [isBlockLoop, setIsBlockLoop] = useState(false);
   const willMount = useRef(true);
 
   function changeLang(lang) {
@@ -37,7 +39,7 @@ function RobotPageContainer() {
     setTheme(theme === 'vs-dark' ? 'vs-light' : 'vs-dark');
   }
 
-  function uploadCode() {
+  async function uploadCode() {
     // console.log(document.getElementById('editor').firstElementChild.innerHTML );
     if (robot === '') {
       setShowError(true);
@@ -56,12 +58,45 @@ function RobotPageContainer() {
       return;
     }
     if (isBlock == true) {
-      sendRobotBlockCode(robot, editorValue);
+      let res = await sendRobotBlockCode(robot, editorValue, isBlockLoop);
+      if (res === true) {
+        setShowError(true);
+        setVariant('success');
+        setErrorMessage('Code uploaded successfully');
+        setTimeout(() => {
+          setShowError(false);
+          setVariant('danger');
+        }, 3000);
+      } else {
+        setShowError(true);
+        setVariant('danger');
+        setErrorMessage('Error while uploading code');
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000);
+      }
       return;
     }
     console.log("editorValue", editorValue);
     if (editorValue.length > 0) {
-      sendRobotRawCode(robot, editorValue);
+      let res = await sendRobotRawCode(robot, editorValue);
+      if (res === true) {
+        setShowError(true);
+        setVariant('success');
+        setErrorMessage('Code uploaded successfully');
+        setTimeout(() => {
+          setShowError(false);
+          setVariant('danger');
+        }, 3000);
+      }
+      else {
+        setShowError(true);
+        setVariant('danger');
+        setErrorMessage('Error while uploading code');
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000);
+      }
       return;
     }
   }
@@ -85,7 +120,7 @@ function RobotPageContainer() {
         <div id="topbar">
           <Navbar />
         </div>
-        <Alert variant='danger' show={showError} onClose={() => setShowError(false)} dismissible
+        <Alert variant={variant} show={showError} onClose={() => setShowError(false)} dismissible
           style={{
             right: "0", left: "0",
             marginRight: "auto", marginLeft: "auto",
@@ -141,6 +176,14 @@ function RobotPageContainer() {
                     id="custom-switch"
                     label="Use Blocks"
                     onChange={() => setIsBlock(!isBlock)}
+                  />
+                </Form>
+                <Form>
+                  <Form.Check
+                    type='switch'
+                    id="custom-switch"
+                    label="Loop code"
+                    onChange={() => setIsBlockLoop(!isBlockLoop)}
                   />
                 </Form>
                 <Form>

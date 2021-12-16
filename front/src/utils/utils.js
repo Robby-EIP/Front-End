@@ -12,7 +12,7 @@ export const getAPI = async (url) => {
         }
       }
     );
-    return response.data;
+    return response;
   } catch (error) {
     console.log(error);
     return { success: false };
@@ -32,7 +32,7 @@ export const postAPI = async (url, data) => {
         }
       }
     );
-    return await response.json();
+    return response;
   } catch (error) {
     console.log(error);
     return {success: false};
@@ -45,9 +45,9 @@ export const getRobots = async () => {
     let response = await getAPI(url);
   
     console.log('response', response);
-    console.log('response[success]', response['success']);
-    if (response['success'] == "true") {
-      return response['robots'];
+    console.log('response[success]', response['data']['success']);
+    if (response['data']['success'] == "true") {
+      return response['data']['robots'];
     }
     return [];
   } catch (error) {
@@ -61,8 +61,8 @@ export const getAvailableRobotBlocks = async (robotName) => {
     const url = `${process.env.REACT_APP_API_URL}/blocs?robot=${robotName}`;
     let response = await getAPI(url);
   
-    if (response['success'] == "true") {
-      return response['blocks'];
+    if (response['data']['success'] == "true") {
+      return response['data']['blocks'];
     }
     return [];
   } catch (error) {
@@ -77,8 +77,10 @@ export const sendRobotRawCode = async (robotName, code) => {
     let response = await postAPI(url, { code: code });
   
     if (response['status'] == '200') {
+      console.log('200');
       return true;
     }
+    console.log(response['status']);
     return false;
   } catch (error) {
     console.log(error);
@@ -86,7 +88,7 @@ export const sendRobotRawCode = async (robotName, code) => {
   }
 };
 
-export const sendRobotBlockCode = async (robotName, isLoop, blocks) => {
+export const sendRobotBlockCode = async (robotName, blocks, isLoop) => {
   try {
     const url = `${process.env.REACT_APP_API_URL}/push/blocs?robot=${robotName}`;
     let body = {
@@ -108,7 +110,17 @@ export const sendRobotBlockCode = async (robotName, isLoop, blocks) => {
 export const sendRobotFileCode = async (robotName, file) => {
   try {
     const url = `${process.env.REACT_APP_API_URL}/push/file?robot=${robotName}`;
-    let response = await postAPI(url, { file: file });
+    let response = await Axios.post(
+      url,
+      file,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*'
+        }
+      }
+    );
   
     if (response['status'] == '200') {
       return true;
