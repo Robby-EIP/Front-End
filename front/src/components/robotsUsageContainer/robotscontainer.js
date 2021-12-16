@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import MyEditor from '../editor/editor';
 import script from 'react';
 import Navbar from '../navbar/navbar';
-import { Form, Button, Label, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
+import { Form, Button, Label, Dropdown, DropdownButton, Alert, Spinner } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,6 +27,7 @@ function RobotPageContainer() {
   const [selectedFiles, setSelectedFiles] = useState(undefined);
   const willMount = useRef(true);
   const [fileInput, setFileInput] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   function changeLang(lang) {
     setLang(lang);
@@ -46,13 +47,6 @@ function RobotPageContainer() {
     if (e.target.files) {
       setSelectedFiles(e.target.files);
       setFileInput(true);
-      // console.log(e.target.files);
-      // let file = e.target.files[0];
-      // let form = new FormData();
-      // form.append('file', e.target.files[0]);
-      // if (e.target.files[0]) {
-      //   sendRobotFileCode(robot, form);
-      // }
     } else {
       console.log("Nope");
     }
@@ -70,6 +64,7 @@ function RobotPageContainer() {
     }
 
     if (fileInput) {
+      setIsUploading(true);
       let formData = new FormData();
       formData.append('file', selectedFiles[0]);
       let res = await sendRobotFileCode(robot, formData);
@@ -83,21 +78,24 @@ function RobotPageContainer() {
       } else {
         console.log(res);
         setShowError(true);
-        setErrorMessage('Error while uploading');
+        setErrorMessage('Error while uploading\nYou might want to check the validity of your file');
         setTimeout(() => {
           setShowError(false);
         }, 3000);
         setFileInput(false);
       }
       document.getElementById('upload').value = "";
+      setIsUploading(false);
+      return;
     }
 
     if (editorValue.length === 0) {
       setShowError(true);
-      setErrorMessage('Please enter some code / bloks before uploading');
+      setErrorMessage('Please enter some code or some blocks before uploading');
       setTimeout(() => {
         setShowError(false);
       }, 3000);
+      setIsUploading(false);
       return;
     }
 
@@ -111,6 +109,7 @@ function RobotPageContainer() {
           setShowError(false);
           setVariant('danger');
         }, 3000);
+        setIsUploading(false);
       } else {
         setShowError(true);
         setVariant('danger');
@@ -119,6 +118,7 @@ function RobotPageContainer() {
           setShowError(false);
         }, 3000);
       }
+      setIsUploading(false);
       return;
     }
     console.log("editorValue", editorValue);
@@ -132,6 +132,7 @@ function RobotPageContainer() {
           setShowError(false);
           setVariant('danger');
         }, 3000);
+        setIsUploading(false);
       }
       else {
         setShowError(true);
@@ -141,6 +142,7 @@ function RobotPageContainer() {
           setShowError(false);
         }, 3000);
       }
+      setIsUploading(false);
       return;
     }
   }
@@ -168,7 +170,7 @@ function RobotPageContainer() {
           style={{
             right: "0", left: "0",
             marginRight: "auto", marginLeft: "auto",
-            width: "20%", height: '10%', textAlign: 'center',
+            width: "20%", height: '12%', textAlign: 'center',
             marginTop: "auto", marginBottom: "auto", zIndex: '1000', position: 'fixed'
           }}>
           <Alert.Heading>{errorMessage}</Alert.Heading>
@@ -253,7 +255,9 @@ function RobotPageContainer() {
                 </div>
                 <div id="submit-button">
                   <Button size="lg" variant="outline-success">Simulate</Button>
-                  <Button size="lg" variant="success" onClick={uploadCode}>Upload</Button>
+                  {(isUploading === false) ? <Button size="lg" disabled={isUploading} variant="success" onClick={uploadCode}>Upload</Button> : <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>}
                 </div>
               </div>
             </div>
