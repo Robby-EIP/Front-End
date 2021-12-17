@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import MyEditor from '../editor/editor';
 import script from 'react';
 import Navbar from '../navbar/navbar';
-import { Form, Button, Card, Label, Dropdown, DropdownButton, Alert, Spinner } from 'react-bootstrap';
+import { Form, Button, Card, Label, Dropdown, DropdownButton, Alert, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -229,22 +229,32 @@ function RobotPageContainer() {
                       }, this)
                   }
                 </DropdownButton>
-                <Form>
-                  <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="Use Blocks"
-                    onChange={() => setIsBlock(!isBlock)}
-                  />
-                </Form>
-                <Form>
-                  <Form.Check
-                    type='switch'
-                    id="custom-switch"
-                    label="Loop code"
-                    onChange={() => setIsBlockLoop(!isBlockLoop)}
-                  />
-                </Form>
+                <OverlayTrigger
+                  placement='top'
+                  overlay={<Tooltip id="button-tooltip-2">Switch to swap from code to blocks.</Tooltip>}
+                >
+                  <Form>
+                    <Form.Check
+                      type="switch"
+                      id="custom-switch"
+                      label="Use Blocks"
+                      onChange={() => setIsBlock(!isBlock)}
+                    />
+                  </Form>
+                </OverlayTrigger>
+                <OverlayTrigger
+                  placement='top'
+                  overlay={<Tooltip id="button-tooltip-2">Switch to loop blocks code (the code will be looped so make sure to add a stop condition).</Tooltip>}
+                >
+                  <Form>
+                    <Form.Check
+                      type='switch'
+                      id="custom-switch"
+                      label="Loop code"
+                      onChange={() => setIsBlockLoop(!isBlockLoop)}
+                    />
+                  </Form>
+                </OverlayTrigger>
                 <Form>
                   <Form.Check
                     type="switch"
