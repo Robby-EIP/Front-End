@@ -8,7 +8,7 @@ import Editor from "@monaco-editor/react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
-import { getRobots, sendRobotBlockCode, sendRobotRawCode, sendRobotFileCode } from '../../utils/utils';
+import { getRobots, sendRobotBlockCode, sendRobotRawCode, sendRobotFileCode, getAvailableRobotBlocks } from '../../utils/utils';
 
 function RobotPageContainer() {
 
@@ -58,7 +58,7 @@ function RobotPageContainer() {
     let list = [];
     if (res) {
       list = res.split(',');
-      setNbrBlocs(list);
+      setBlocList(list);
       console.log(list);
     } else {
       console.log("zeubi");
@@ -255,7 +255,7 @@ function RobotPageContainer() {
                 </Form>
               </div>
               <div id="editor">
-                {nbrBlocs.map((a, i) => (
+                {blocList.map((a, i) => (
                   <Card id={i} style={{height: "150px", width: "50px"}}>
                     <Card.Title>{a}</Card.Title>
                   </Card>
@@ -272,7 +272,7 @@ function RobotPageContainer() {
                   </Form.Group>
                 </div>
                 <div id="submit-button">
-                  <Button size="lg" variant="outline-success">Simulate</Button>
+                  <Button size="lg" variant="outline-success" onClick={seeRobotsBlocks}>Simulate</Button>
                   {(isUploading === false) ? <Button size="lg" disabled={isUploading} variant="success" onClick={uploadCode}>Upload</Button> : <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
                   </Spinner>}
